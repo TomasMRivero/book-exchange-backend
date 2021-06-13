@@ -1,11 +1,11 @@
-require('dotenv').config()
+require('dotenv').config();
 var mysql = require('mysql');
 var util = require('util');
 
 var settings = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: provess.env.DB_PASS,
+    password: process.env.DB_PASS,
     database: process.env.DB_COLLECTION
 }
 
