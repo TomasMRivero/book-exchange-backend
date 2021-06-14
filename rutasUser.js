@@ -9,7 +9,6 @@ route.post('/', async(req, res) => {
         res.status(200).json(resp)
     }catch (e){
         console.log(e.code);
-        console.log(e);
         res.status(400).json(e.mensaje)
     }
 

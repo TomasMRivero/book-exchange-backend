@@ -8,15 +8,25 @@ async function getGenderList(){
 }
 
 async function getGenderById(id){
-    return await qy('SELECT * FROM `gender_list` WHERE id = ?', [ id ])
+    return await qy('SELECT * FROM `gender_list` WHERE id = ?', [ id ]);
 }
 
 async function newUser(setParams){
-    return await qy('INSERT INTO `user_account` SET ?', [ setParams ] )    
+    return await qy('INSERT INTO `user_account` SET ?', [ setParams ] );
+}
+
+async function getUserById(id){
+    return await qy('SELECT * FROM `user_account` WHERE id = ?', [ id ]);
+}
+
+async function getUserByField(field, value){
+    return await qy(`SELECT * FROM \`user_account\` WHERE ${field} = ?`, [ value ])
 }
 
 module.exports = {
     getGenderList,
     getGenderById,
-    newUser
+    newUser,
+    getUserByField,
+    getUserById
 }

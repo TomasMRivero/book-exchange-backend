@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
-app.use('user/', rutasUser);
+app.use('/user', rutasUser);
 
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);

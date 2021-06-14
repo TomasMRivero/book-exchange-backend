@@ -1,6 +1,7 @@
 const service = require("../services/user/user_accountService");
 
-function registerUser(params){
+async function registerUser(params){
+
     const {
         mail,
         gender_id,
@@ -16,12 +17,20 @@ function registerUser(params){
     ){
         throw {code: "FALTAN_DATOS" , mensaje: "faltan datos"}; //ERR_FALTAN_DATOS
     }
+
     const setParams = {
         mail: mail.trim().toLowerCase(),
         gender_id: gender_id,
         alias: alias.trim().toUpperCase(),
         name: name.trim()
     };
+
+    const searchParams = {
+        mail: setParams.mail,
+        alias: setParams.alias
+    }
+    
+    await service.verifyExistingUser(searchParams)
 }
 
 module.exports = {
