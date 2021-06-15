@@ -22,10 +22,21 @@ async function verifySetParams(params){
         throw {code: "ERR_USUARIO_NO_ENCONTRADO", mensaje: "usuario no encontrado"}; //ERR_USUARIO_NO_ENCONTRADO
     }
 
-    return {
+    params = {
         user_account_id: user_account_id,
         title: title.trim().toLowerCase(),
         author: author.trim().toUpperCase(),
+    }
+
+    if(  !description || description == null || description == "" || description.trim() == ""){
+        return {
+            ...params,
+            description: null
+        };
+    }
+
+    return {
+        ...params,
         description: description.trim()
     };
 
