@@ -1,3 +1,4 @@
+const model = require("../../models/book/bookModel");
 const {getUserById} = require("../../models/user/user_accountModel");
 
 async function verifySetParams(params){
@@ -24,7 +25,7 @@ async function verifySetParams(params){
 
     params = {
         user_account_id: user_account_id,
-        title: title.trim().toLowerCase(),
+        title: title.trim().toUpperCase(),
         author: author.trim().toUpperCase(),
     }
 
@@ -42,6 +43,11 @@ async function verifySetParams(params){
 
 }
 
+async function createBook(setParams){
+    return await model.newBook(setParams);
+}
+
 module.exports = {
-    verifySetParams
+    verifySetParams,
+    createBook
 }
