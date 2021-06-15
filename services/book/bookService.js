@@ -13,6 +13,11 @@ async function showBookById(id){
     return book[0];
 }
 
+async function showBookListByField(field, value){
+    const list = await model.getBookListByField(field, value.trim().toUpperCase());
+    return list.length > 0 ? list : {mensaje: `no se encontraron resultados para ${value}`};
+}
+
 async function verifySetParams(params){
     
     const {
@@ -61,6 +66,7 @@ async function createBook(setParams){
 
 module.exports = {
     showBookList,
+    showBookListByField,
     showBookById,
     verifySetParams,
     createBook

@@ -8,6 +8,13 @@ async function showBookById(id){
     return await service.showBookById(id);
 }
 
+async function showBookListByField(field, value){
+    if (!value || !value.trim()){
+        throw {code: "ERR_FALTAN_DATOS", mensaje: "faltan datos"}; //ERR_FALTAN_DATOS
+    }
+    return await service.showBookListByField(field, value);
+}
+
 async function createBook(params){
     const setParams = await service.verifySetParams(params);
 
@@ -16,6 +23,7 @@ async function createBook(params){
 
 module.exports = {
     showBookList,
+    showBookListByField,
     showBookById,
     createBook
 }

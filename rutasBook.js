@@ -20,6 +20,18 @@ route.get('/:id', async(req, res) => {
         res.status(400).json(e.mensaje)
     }
 });
+route.get('/search/:field', async (req, res) => {
+    try{
+        //.../search/:author?q=AUTOR1
+        const field = req.params.field;
+        const searchValue = req.query.q;
+        const resp = await controller.showBookListByField(field, searchValue);
+        res.status(200).json(resp)
+    }catch(e){
+        console.log(e.code);
+        res.status(400).json(e.mensaje)
+    }
+});
 
 route.post('/', async(req, res) => {
        
