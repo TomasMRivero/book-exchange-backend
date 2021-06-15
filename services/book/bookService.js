@@ -1,6 +1,10 @@
 const model = require("../../models/book/bookModel");
 const {getUserById} = require("../../models/user/user_accountModel");
 
+async function showBookList(){
+    return await model.getBookList();
+}
+
 async function verifySetParams(params){
     
     const {
@@ -48,6 +52,7 @@ async function createBook(setParams){
 }
 
 module.exports = {
+    showBookList,
     verifySetParams,
     createBook
 }

@@ -1,5 +1,9 @@
 const service = require("../services/book/bookService");
 
+async function showBookList(){
+    return await service.showBookList();
+}
+
 async function createBook(params){
     const setParams = await service.verifySetParams(params);
 
@@ -7,5 +11,6 @@ async function createBook(params){
 }
 
 module.exports = {
+    showBookList,
     createBook
 }
