@@ -4,6 +4,10 @@ async function showBookList(){
     return await service.showBookList();
 }
 
+async function showBookById(id){
+    return await service.showBookById(id);
+}
+
 async function createBook(params){
     const setParams = await service.verifySetParams(params);
 
@@ -12,5 +16,6 @@ async function createBook(params){
 
 module.exports = {
     showBookList,
+    showBookById,
     createBook
 }

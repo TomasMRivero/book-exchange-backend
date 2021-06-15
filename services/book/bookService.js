@@ -5,6 +5,14 @@ async function showBookList(){
     return await model.getBookList();
 }
 
+async function showBookById(id){
+    const book = await model.getBookById(id)
+    if (book.length === 0){
+        throw {code: "ERR_LIBRO_NO_ENCONTRADO", mensaje: "libro no encontrado"}; //ERR_LIBRO_NO_ENCONTRADO
+    }
+    return book[0];
+}
+
 async function verifySetParams(params){
     
     const {
@@ -53,6 +61,7 @@ async function createBook(setParams){
 
 module.exports = {
     showBookList,
+    showBookById,
     verifySetParams,
     createBook
 }

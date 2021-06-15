@@ -11,6 +11,16 @@ route.get('/', async( _ ,res) =>{
         res.status(400).json(e.mensaje)
     }
 });
+route.get('/:id', async(req, res) => {
+    try{
+        const books = await controller.showBookById(req.params.id);
+        res.status(200).json(books);
+    }catch (e){
+        console.log(e.code);
+        res.status(400).json(e.mensaje)
+    }
+});
+
 route.post('/', async(req, res) => {
        
     try{
