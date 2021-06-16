@@ -15,7 +15,7 @@ async function showBookById(id){
 
 async function showBookListByField(field, value){
     const list = await model.getBookListByField(field, value.trim().toUpperCase());
-    return list.length > 0 ? list : {mensaje: `no se encontraron resultados para ${value}`};
+    return list.length > 0 ? list : [];
 }
 
 async function verifySetParams(params){

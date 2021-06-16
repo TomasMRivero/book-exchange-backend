@@ -15,6 +15,10 @@ async function newUser(setParams){
     return await qy('INSERT INTO `user_account` SET ?', [ setParams ] );
 }
 
+async function getUserList(id){
+    return await qy('SELECT * FROM `user_account`');
+}
+
 async function getUserById(id){
     return await qy('SELECT * FROM `user_account` WHERE id = ?', [ id ]);
 }
@@ -27,6 +31,7 @@ module.exports = {
     getGenderList,
     getGenderById,
     newUser,
+    getUserList,
     getUserByField,
     getUserById
 }

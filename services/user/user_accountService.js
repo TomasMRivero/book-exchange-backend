@@ -1,5 +1,9 @@
 const model = require("../../models/user/user_accountModel");
 
+async function showUserList(){
+    return await model.getUserList();
+}
+
 async function verifySetParams(params){
     
     const {
@@ -49,6 +53,7 @@ async function registerUser(setParams){
 
 
 module.exports = {
+    showUserList,
     verifySetParams,
     verifyExistingUser,
     registerUser
