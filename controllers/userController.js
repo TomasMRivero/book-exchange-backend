@@ -14,11 +14,16 @@ async function registerUser(params){
     return await service.registerUser(setParams);
 }
 
+async function showUserById(id){
+    return await service.showUserById(id);
+}
+
 async function showUserList(){
     return await service.showUserList();
 }
 
 module.exports = {
     registerUser,
-    showUserList
+    showUserList,
+    showUserById
 }

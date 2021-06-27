@@ -11,7 +11,15 @@ route.get('/', async(req, res) => {
         res.status(400).json(e.mensaje)
     }
 });
-
+route.get('/:id', async(req, res) => {
+    try{
+        const user = await controller.showUserById(req.params.id);
+        res.status(200).json(user);
+    }catch (e){
+        console.log(e.code);
+        res.status(400).json(e.mensaje)
+    }
+});
 route.post('/', async(req, res) => {
        
     try{
@@ -24,4 +32,4 @@ route.post('/', async(req, res) => {
 
 });
 
-module.exports = route
+module.exports = route;

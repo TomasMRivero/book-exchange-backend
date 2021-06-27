@@ -4,6 +4,14 @@ async function showUserList(){
     return await model.getUserList();
 }
 
+async function showUserById(id){
+    const user = await model.getUserById(id)
+    if (user.length === 0){
+        throw {code: "ERR_USUARIO_NO_ENCONTRADO", mensaje: "usuario no encontrado"}; //ERR_LIBRO_NO_ENCONTRADO
+    }
+    return user[0];
+}
+
 async function verifySetParams(params){
     
     const {
@@ -54,6 +62,7 @@ async function registerUser(setParams){
 
 module.exports = {
     showUserList,
+    showUserById,
     verifySetParams,
     verifyExistingUser,
     registerUser

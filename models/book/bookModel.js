@@ -12,7 +12,7 @@ async function getBookById(id){
 }
 
 async function getBookListByField(field, value){
-    return await qy(`SELECT * FROM \`book\` WHERE ${field} = ?`, [ value ]);
+    return await qy(`SELECT * FROM \`book\` WHERE ${field} LIKE "%${value}%"`);
 }
 
 async function newBook(setParams){
