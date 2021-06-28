@@ -1,6 +1,8 @@
 const { ERR_USER__EXISTING_MAIL, ERR_USER__EXISTING_ALIAS, ERR_USER__INVALID_GENDER, ERR_USER__NOT_FOUND, ERR_INPUT__MISSING_DATA } = require("../../errorHandlers");
 const model = require("../../models/user/user_accountModel");
 
+const bcrypt = require('bcrypt');
+
 async function showUserList(){
     return await model.getUserList();
 }
@@ -19,14 +21,16 @@ async function verifySetParams(params){
         mail,
         gender_id,
         alias,
-        name
+        name,
+        password
     } = params;
 
     if (
         !mail || !mail.trim() ||
         !gender_id ||
         !alias || !alias.trim() ||
-        !name || !name.trim() 
+        !name || !name.trim() ||
+        !password
     ){
         throw ERR_INPUT__MISSING_DATA;
     }
@@ -36,13 +40,15 @@ async function verifySetParams(params){
         throw ERR_USER__INVALID_GENDER;
     }
 
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
     return {
         mail: mail.trim().toLowerCase(),
         gender_id: gender_id,
         alias: alias.trim().toUpperCase(),
-        name: name.trim()
+        name: name.trim(),
+        password_hash: encryptedPassword
     };
-
 }
 
 async function verifyExistingUser(searchParams){

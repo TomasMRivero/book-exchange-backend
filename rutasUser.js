@@ -20,16 +20,5 @@ route.get('/:id', async(req, res) => {
         res.status(e.status).json(e.message)
     }
 });
-route.post('/', async(req, res) => {
-       
-    try{
-        const resp = await controller.registerUser(req.body);
-        res.status(201).json({id: resp.insertId})
-    }catch (e){
-        console.log(e.code);
-        res.status(e.status).json(e.message)
-    }
-
-});
 
 module.exports = route;
