@@ -8,7 +8,7 @@ route.get('/', async( _ ,res) =>{
         res.status(200).json(books);
     }catch (e){
         console.log(e.code);
-        res.status(400).json(e.mensaje)
+        res.status(e.status).json(e.message)
     }
 });
 route.get('/:id', async(req, res) => {
@@ -17,7 +17,7 @@ route.get('/:id', async(req, res) => {
         res.status(200).json(books);
     }catch (e){
         console.log(e.code);
-        res.status(400).json(e.mensaje)
+        res.status(e.status).json(e.message)
     }
 });
 route.get('/search/:field', async (req, res) => {
@@ -26,10 +26,16 @@ route.get('/search/:field', async (req, res) => {
         const field = req.params.field;
         const searchValue = req.query.q;
         const resp = await controller.showBookListByField(field, searchValue);
-        res.status(200).json(resp)
+        if(resp.length > 0){
+            res.status(200);
+        }else{
+            res.status(204);
+        }
+        res.json(resp)
+        
     }catch(e){
         console.log(e.code);
-        res.status(400).json(e.mensaje)
+        res.status(e.status).json(e.message)
     }
 });
 
@@ -37,10 +43,10 @@ route.post('/', async(req, res) => {
        
     try{
         const resp = await controller.createBook(req.body);
-        res.status(200).json({id: resp.insertId})
+        res.status(201).json({id: resp.insertId})
     }catch (e){
         console.log(e.code);
-        res.status(400).json(e.mensaje)
+        res.status(e.status).json(e)
     }
 
 });

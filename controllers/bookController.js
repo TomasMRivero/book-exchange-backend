@@ -10,7 +10,7 @@ async function showBookById(id){
 
 async function showBookListByField(field, value){
     if (!value || !value.trim()){
-        throw {code: "ERR_FALTAN_DATOS", mensaje: "faltan datos"}; //ERR_FALTAN_DATOS
+        throw {code: "ERR_FALTAN_DATOS", message: "faltan datos"}; //ERR_FALTAN_DATOS
     }
     return await service.showBookListByField(field, value);
 }

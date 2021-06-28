@@ -1,3 +1,4 @@
+const { ERR_USER__EXISTING_MAIL, ERR_USER__EXISTING_ALIAS, ERR_USER__INVALID_GENDER, ERR_USER__NOT_FOUND, ERR_INPUT__MISSING_DATA } = require("../../errorHandlers");
 const model = require("../../models/user/user_accountModel");
 
 async function showUserList(){
@@ -7,7 +8,7 @@ async function showUserList(){
 async function showUserById(id){
     const user = await model.getUserById(id)
     if (user.length === 0){
-        throw {code: "ERR_USUARIO_NO_ENCONTRADO", mensaje: "usuario no encontrado"}; //ERR_LIBRO_NO_ENCONTRADO
+        throw ERR_USER__NOT_FOUND;
     }
     return user[0];
 }
@@ -27,12 +28,12 @@ async function verifySetParams(params){
         !alias || !alias.trim() ||
         !name || !name.trim() 
     ){
-        throw {code: "ERR_FALTAN_DATOS" , mensaje: "faltan datos"}; //ERR_FALTAN_DATOS
+        throw ERR_INPUT__MISSING_DATA;
     }
 
     const genderExists =  await model.getGenderById(gender_id);
     if (genderExists.length === 0){
-        throw {code: "ERR_GENERO_INVALIDO", mensaje: "genero no válido"}; //ERR_GENERO_INVALIDO
+        throw ERR_USER__INVALID_GENDER;
     }
 
     return {
@@ -46,11 +47,18 @@ async function verifySetParams(params){
 
 async function verifyExistingUser(searchParams){
 
-    for (const field in searchParams){
-        exists = await model.getUserByField(field, searchParams[field]);
-        if (exists.length !== 0){
-            throw { code: 'ERR_YA_EXISTE', mensaje: `Ya existe un usuario con ese ${field}` }; //ERR_YA_EXISTE
-        }
+    const {
+        mail,
+        alias
+    } = searchParams;
+    
+    let exists = await model.getUserByField('mail', mail);
+    if (exists.length !== 0){
+        throw ERR_USER__EXISTING_MAIL;
+    }
+    exists = await model.getUserByField('alias', alias);
+    if (exists.length !== 0){
+        throw ERR_USER__EXISTING_ALIAS;
     }
 
 }

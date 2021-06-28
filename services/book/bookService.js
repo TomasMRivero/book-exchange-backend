@@ -1,3 +1,4 @@
+const { ERR_BOOK__NOT_FOUND, ERR_INPUT__MISSING_DATA, ERR_USER__NOT_FOUND } = require("../../errorHandlers");
 const model = require("../../models/book/bookModel");
 const {getUserById} = require("../../models/user/user_accountModel");
 
@@ -8,7 +9,7 @@ async function showBookList(){
 async function showBookById(id){
     const book = await model.getBookById(id)
     if (book.length === 0){
-        throw {code: "ERR_LIBRO_NO_ENCONTRADO", mensaje: "libro no encontrado"}; //ERR_LIBRO_NO_ENCONTRADO
+        throw ERR_BOOK__NOT_FOUND;
     }
     return book[0];
 }
@@ -32,12 +33,12 @@ async function verifySetParams(params){
         !title || !title.trim() ||
         !author || !author.trim()
     ){
-        throw {code: "ERR_FALTAN_DATOS" , mensaje: "faltan datos"}; //ERR_FALTAN_DATOS
+        throw ERR_INPUT__MISSING_DATA;
     }
 
     const userExists =  await getUserById(user_account_id);
     if (userExists.length === 0){
-        throw {code: "ERR_USUARIO_NO_ENCONTRADO", mensaje: "usuario no encontrado"}; //ERR_USUARIO_NO_ENCONTRADO
+        throw ERR_USER__NOT_FOUND;
     }
 
     params = {
