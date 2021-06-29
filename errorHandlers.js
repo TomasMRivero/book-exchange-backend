@@ -11,6 +11,10 @@ const ERR_USER__EXISTING_MAIL = {code:'ERR_USER__EXISTING_USER_MAIL', message: '
 const ERR_LOGIN__INVALID_USER = {code:'ERR_LOGIN__INVALID_USER', message: 'Usuario no válido', satus: 400};
 const ERR_LOGIN__INVALID_PASSWORD = {code:'ERR_LOGIN__INVALID_PASSWORD', message: 'Contraseña incorrecta', status: 400};
 
+
+const ERR_AUTH__NOT_LOGGED = {code:'ERR_AUTH__NOT_LOGGED', message: 'No estás logueado', status: 401};
+const ERR_AUTH__INVALID_TOKEN = {code:'ERR_AUTH__INVALID_TOKEN', message: 'Token inválido', status: 401};
+
 module.exports = {
 ERR_INPUT__MISSING_DATA,
 ERR_BOOK__NOT_FOUND,
@@ -19,5 +23,7 @@ ERR_USER__INVALID_GENDER,
 ERR_USER__EXISTING_ALIAS,
 ERR_USER__EXISTING_MAIL,
 ERR_LOGIN__INVALID_USER,
-ERR_LOGIN__INVALID_PASSWORD
+ERR_LOGIN__INVALID_PASSWORD,
+ERR_AUTH__NOT_LOGGED,
+ERR_AUTH__INVALID_TOKEN
 }
