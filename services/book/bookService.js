@@ -1,4 +1,4 @@
-const { ERR_BOOK__NOT_FOUND, ERR_INPUT__MISSING_DATA, ERR_USER__NOT_FOUND } = require("../../errorHandlers");
+const { ERR_BOOK__NOT_FOUND, ERR_INPUT__MISSING_DATA, ERR_USER__NOT_FOUND, ERR_AUTH__FORBIDDEN } = require("../../errorHandlers");
 const model = require("../../models/book/bookModel");
 const {getUserById} = require("../../models/user/user_accountModel");
 
@@ -65,6 +65,12 @@ async function createBook(setParams){
     return await model.newBook(setParams);
 }
 
+async function verifyAuthorization(dbId, tokenId){    
+    if(dbId !== tokenId){
+        throw ERR_AUTH__FORBIDDEN
+    }
+}
+
 async function verifyNewValues(params, book){
 
     const title = (() => {return (!params.title || !params.title.trim()?book.title:params.title.trim())});
@@ -84,12 +90,19 @@ async function updateBook(setParams, searchParams){
     return await model.updateBook(setParams, searchParams);
 }
 
+async function deleteBook(id){
+    await model.deleteBook(id);
+    return {message: "El libro se borró correctamente"};
+}
+
 module.exports = {
     showBookList,
     showBookListByField,
     showBookById,
     verifySetParams,
     createBook,
+    verifyAuthorization,
     verifyNewValues,
-    updateBook
+    updateBook,
+    deleteBook
 }

@@ -66,9 +66,27 @@ route.put('/:id', async(req, res) => {
             user: req.user.user_id,
             book: book,
             newValues: req.body
-        }
-        const resp = await controller.updateBook(sendParams)
-        res.status(201).json(resp)
+        };
+        const resp = await controller.updateBook(sendParams);
+        res.status(201);
+    } catch (e) {
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
+    }
+
+});
+
+route.delete('/:id', async(req, res) => {
+
+    try {
+        const sendParams = {
+            book_id: req.params.id,
+            user_id: req.user.user_id
+        };
+        const resp = await controller.deleteBook(sendParams);
+        res.status(200).json(resp)
     } catch (e) {
         const status = (e) => {return(e.status?e.status:400)}
         const message = (e) => {return(e.message?e.message:"error inesperado")}

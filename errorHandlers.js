@@ -14,6 +14,8 @@ const ERR_LOGIN__INVALID_PASSWORD = {code:'ERR_LOGIN__INVALID_PASSWORD', message
 
 const ERR_AUTH__NOT_LOGGED = {code:'ERR_AUTH__NOT_LOGGED', message: 'No estás logueado', status: 401};
 const ERR_AUTH__INVALID_TOKEN = {code:'ERR_AUTH__INVALID_TOKEN', message: 'Token inválido', status: 401};
+const ERR_AUTH__FORBIDDEN = {code:'ERR_AUTH__FORBIDDEN', message: 'No estás autorizado para realizar esa acción', status: 403};
+
 
 module.exports = {
 ERR_INPUT__MISSING_DATA,
@@ -25,5 +27,6 @@ ERR_USER__EXISTING_MAIL,
 ERR_LOGIN__INVALID_USER,
 ERR_LOGIN__INVALID_PASSWORD,
 ERR_AUTH__NOT_LOGGED,
-ERR_AUTH__INVALID_TOKEN
+ERR_AUTH__INVALID_TOKEN,
+ERR_AUTH__FORBIDDEN
 }

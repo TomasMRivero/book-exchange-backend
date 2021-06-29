@@ -1,4 +1,4 @@
-const { ERR_INPUT__MISSING_DATA } = require("../errorHandlers");
+const { ERR_INPUT__MISSING_DATA, ERR_AUTH__FORBIDDEN } = require("../errorHandlers");
 const service = require("../services/book/bookService");
 
 async function showBookList(){
@@ -27,11 +27,10 @@ async function updateBook(params){
         user,
         book,
         newValues
-    } = params
+    } = params;
 
-    if(book.user_account_id != user){
-        throw new Error('Flashaste compa')
-    }
+    await service.verifyAuthorization(book.user_account_id, user);
+
     const setParams = await service.verifyNewValues(newValues, book);
     const searchParams = {
         id: book.id
@@ -40,10 +39,21 @@ async function updateBook(params){
     return setParams
 }
 
+async function deleteBook(params){
+    const{
+        book_id,
+        user_id
+    } = params;
+    const book = await service.showBookById(book_id);
+    await service.verifyAuthorization(book.user_account_id, user_id);
+    return await service.deleteBook(book_id);
+} 
+
 module.exports = {
     showBookList,
     showBookListByField,
     showBookById,
     createBook,
-    updateBook
+    updateBook,
+    deleteBook
 }

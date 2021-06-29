@@ -21,8 +21,11 @@ async function newBook(setParams){
 }
 
 async function updateBook(setParams, searchParams){
-    console.log(setParams);
     return await qy('UPDATE `book` SET ? WHERE ?', [ setParams, searchParams ] );
+}
+
+async function deleteBook(id){
+    return await qy('DELETE FROM `book` WHERE id=?', [id]);
 }
 
 
@@ -31,5 +34,6 @@ module.exports = {
     getBookList,
     getBookById,
     getBookListByField,
-    updateBook
+    updateBook,
+    deleteBook
 }
