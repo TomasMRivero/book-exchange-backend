@@ -25,7 +25,7 @@ async function verifySetParams(params){
         user_account_id,
         title,
         author,
-        description
+        description,
     } = params;
 
     if (
@@ -65,10 +65,31 @@ async function createBook(setParams){
     return await model.newBook(setParams);
 }
 
+async function verifyNewValues(params, book){
+
+    const title = (() => {return (!params.title || !params.title.trim()?book.title:params.title.trim())});
+    const author = (() => {return (!params.author || !params.author.trim()?book.author:params.author.trim())});
+    const description = (() => {return (!params.description || !params.description.trim()?null:params.description.trim())});
+
+    setParams = {
+        title: title(),
+        author: author(),
+        description: description()
+    };
+
+    return setParams
+}
+
+async function updateBook(setParams, searchParams){
+    return await model.updateBook(setParams, searchParams);
+}
+
 module.exports = {
     showBookList,
     showBookListByField,
     showBookById,
     verifySetParams,
-    createBook
+    createBook,
+    verifyNewValues,
+    updateBook
 }

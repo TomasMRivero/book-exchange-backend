@@ -58,4 +58,24 @@ route.post('/', async(req, res) => {
 
 });
 
+route.put('/:id', async(req, res) => {
+
+    try {
+        const book = await controller.showBookById(req.params.id);
+        const sendParams={
+            user: req.user.user_id,
+            book: book,
+            newValues: req.body
+        }
+        const resp = await controller.updateBook(sendParams)
+        res.status(201).json(resp)
+    } catch (e) {
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
+    }
+
+});
+
 module.exports = route

@@ -22,9 +22,28 @@ async function createBook(params){
     return await service.createBook(setParams);
 }
 
+async function updateBook(params){
+    const{
+        user,
+        book,
+        newValues
+    } = params
+
+    if(book.user_account_id != user){
+        throw new Error('Flashaste compa')
+    }
+    const setParams = await service.verifyNewValues(newValues, book);
+    const searchParams = {
+        id: book.id
+    }
+    await service.updateBook(setParams, searchParams)
+    return setParams
+}
+
 module.exports = {
     showBookList,
     showBookListByField,
     showBookById,
-    createBook
+    createBook,
+    updateBook
 }
