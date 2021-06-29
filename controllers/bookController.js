@@ -1,3 +1,4 @@
+const { ERR_INPUT__MISSING_DATA } = require("../errorHandlers");
 const service = require("../services/book/bookService");
 
 async function showBookList(){
@@ -10,7 +11,7 @@ async function showBookById(id){
 
 async function showBookListByField(field, value){
     if (!value || !value.trim()){
-        throw {code: "ERR_FALTAN_DATOS", message: "faltan datos"}; //ERR_FALTAN_DATOS
+        throw ERR_INPUT__MISSING_DATA
     }
     return await service.showBookListByField(field, value);
 }

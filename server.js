@@ -34,8 +34,8 @@ const auth = (req, res, next) => {
     } catch (e) {
         const status = (e) => {return(e.status?e.status:400)}
         const message = (e) => {return(e.message?e.message:"error inesperado")}
-        console.log(e.code);
-        res.status(status(e)).json(message(e))
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 };
 auth.unless = unless;
@@ -43,7 +43,11 @@ auth.unless = unless;
 app.use(auth.unless({
     path:[
         {url:'/login', methods:['POST']},
-        {url:'/register', method:['POST']}
+        {url:'/register', method:['POST']},
+
+        //rutas book
+        {url: /^\/book\/search\/.*/ , method:['GET']},
+        {url: /^\/book\/.*/, method:['GET']}
     ]
 }));
 

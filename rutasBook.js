@@ -2,22 +2,26 @@ const express = require('express');
 const route = express.Router();
 const controller = require('./Controllers/bookController.js');
 
-route.get('/', async( _ ,res) =>{
+route.get('/', async( req ,res) =>{
     try{
         const books = await controller.showBookList();
         res.status(200).json(books);
     }catch (e){
-        console.log(e.code);
-        res.status(e.status).json(e.message)
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 });
 route.get('/:id', async(req, res) => {
     try{
         const books = await controller.showBookById(req.params.id);
-        res.status(200).json(books);
+        res.status(200).json({books});
     }catch (e){
-        console.log(e.code);
-        res.status(e.status).json(e.message)
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 });
 route.get('/search/:field', async (req, res) => {
@@ -26,27 +30,30 @@ route.get('/search/:field', async (req, res) => {
         const field = req.params.field;
         const searchValue = req.query.q;
         const resp = await controller.showBookListByField(field, searchValue);
-        if(resp.length > 0){
-            res.status(200);
-        }else{
-            res.status(204);
-        }
-        res.json(resp)
+        res.json(resp).status(200);
         
     }catch(e){
-        console.log(e.code);
-        res.status(e.status).json(e.message)
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 });
 
 route.post('/', async(req, res) => {
        
     try{
-        const resp = await controller.createBook(req.body);
+        const sendParams={
+            user_account_id: req.user.user_id,
+            ...req.body
+        };
+        const resp = await controller.createBook(sendParams);
         res.status(201).json({id: resp.insertId})
     }catch (e){
-        console.log(e.code);
-        res.status(e.status).json(e)
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 
 });
