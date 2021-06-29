@@ -15,7 +15,7 @@ async function newUser(setParams){
     return await qy('INSERT INTO `user_account` SET ?', [ setParams ] );
 }
 
-async function getUserList(id){
+async function getUserList(){
     return await qy('SELECT * FROM `user_account`');
 }
 
