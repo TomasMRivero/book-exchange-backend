@@ -36,8 +36,13 @@ async function searchToken(token){
 }
 
 async function getUserForAuth(field, value){
-    return await qy('SELECT `alias`, `password_hash` FROM `user_account` WHERE ?? = ?', [ field, value ]);
+    return await qy('SELECT * FROM `user_account` WHERE ?? = ?', [ field, value ]);
 }
+
+async function updateUser(setParams, searchParams){
+    return await qy('UPDATE `user_account` SET ? WHERE ?', [setParams, searchParams]);
+}
+
 
 module.exports = {
     getGenderList,
@@ -48,5 +53,6 @@ module.exports = {
     getUserById,
     blacklistToken,
     searchToken,
-    getUserForAuth
+    getUserForAuth,
+    updateUser
 }

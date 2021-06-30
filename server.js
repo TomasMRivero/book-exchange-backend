@@ -54,6 +54,7 @@ app.use(auth.unless({
 
         //rutas user
         {url:'/user', methods:['GET']},
+        {url: /^\/user\/.[^me]/, methods:['GET']}
     ]
 }));
 

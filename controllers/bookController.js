@@ -35,8 +35,8 @@ async function updateBook(params){
     const searchParams = {
         id: book.id
     }
-    await service.updateBook(setParams, searchParams)
-    return setParams
+    await service.updateBook(setParams, searchParams);
+    return setParams;
 }
 
 async function deleteBook(params){

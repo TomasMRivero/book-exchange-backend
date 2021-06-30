@@ -75,10 +75,31 @@ async function registerUser(setParams){
     return await model.newUser(setParams)
 }
 
+async function verifyNewValues(params, book){
+
+    const alias = (() => {return (!params.alias || !params.alias.trim()?user.alias:params.alias.toUpperCase().trim())});
+    const name = (() => {return (!params.name || !params.name.trim()?user.name:params.name.toUpperCase().trim())});
+   
+    setParams = {
+        alias: alias(),
+        name: name()
+    };
+
+    return setParams
+
+}
+
+async function updateUser(setParams, searchParams){
+    return await model.updateUser(setParams, searchParams);
+}
+
 module.exports = {
     showUserList,
     showUserById,
     verifySetParams,
     verifyExistingUser,
-    registerUser
+    registerUser,
+    verifyNewValues,
+    updateUser
+
 }
