@@ -7,18 +7,40 @@ route.get('/', async(req, res) => {
         const resp = await controller.showUserList(req.body);
         res.status(200).json(resp)
     }catch (e){
-        console.log(e.code);
-        res.status(e.status).json(e.message)
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 });
+
+route.get('/me', async(req, res) => {
+
+    try {
+        console.log(req.user)
+        const user = await controller.showUserById(req.user.user_id);
+        res.status(200).json(user);
+    } catch (e) {
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
+    }
+
+});
+
 route.get('/:id', async(req, res) => {
     try{
         const user = await controller.showUserById(req.params.id);
         res.status(200).json(user);
     }catch (e){
-        console.log(e.code);
-        res.status(e.status).json(e.message)
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
     }
 });
+
+route.put('/')
 
 module.exports = route;

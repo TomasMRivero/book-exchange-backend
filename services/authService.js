@@ -11,7 +11,7 @@ async function loginVerification(params){
         password
     } = params;
 
-    const userExists = await model.getUserByField('alias', alias);
+    const userExists = await model.getUserForAuth('alias', alias);
     
     if (userExists.length === 0){
         throw ERR_LOGIN__INVALID_USER

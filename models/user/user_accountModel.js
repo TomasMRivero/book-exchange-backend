@@ -16,15 +16,15 @@ async function newUser(setParams){
 }
 
 async function getUserList(){
-    return await qy('SELECT * FROM `user_account`');
+    return await qy('SELECT `id`, `mail`, `gender_id`, `alias`, `name` FROM `user_account`');
 }
 
 async function getUserById(id){
-    return await qy('SELECT * FROM `user_account` WHERE id = ?', [ id ]);
+    return await qy('SELECT `id`, `mail`, `gender_id`, `alias`, `name` FROM `user_account` WHERE id = ?', [ id ]);
 }
 
 async function getUserByField(field, value){
-    return await qy('SELECT * FROM `user_account` WHERE ?? = ?', [ field, value ]);
+    return await qy('SELECT `id`, `mail`, `gender_id`, `alias`, `name` FROM `user_account` WHERE ?? = ?', [ field, value ]);
 }
 
 async function blacklistToken(setParams){
@@ -35,6 +35,10 @@ async function searchToken(token){
     return await qy('SELECT * FROM `token_blacklist` where token=?', [token]);
 }
 
+async function getUserForAuth(field, value){
+    return await qy('SELECT `alias`, `password_hash` FROM `user_account` WHERE ?? = ?', [ field, value ]);
+}
+
 module.exports = {
     getGenderList,
     getGenderById,
@@ -43,5 +47,6 @@ module.exports = {
     getUserByField,
     getUserById,
     blacklistToken,
-    searchToken
+    searchToken,
+    getUserForAuth
 }
