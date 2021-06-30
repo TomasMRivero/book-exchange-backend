@@ -31,6 +31,10 @@ async function blacklistToken(setParams){
     return await qy('INSERT INTO `token_blacklist` SET ?', [setParams] );
 }
 
+async function searchToken(token){
+    return await qy('SELECT * FROM `token_blacklist` where token=?', [token]);
+}
+
 module.exports = {
     getGenderList,
     getGenderById,
@@ -38,5 +42,6 @@ module.exports = {
     getUserList,
     getUserByField,
     getUserById,
-    blacklistToken
+    blacklistToken,
+    searchToken
 }

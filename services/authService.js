@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 
-const { ERR_LOGIN__INVALID_USER, ERR_LOGIN__INVALID_PASSWORD } = require("../errorHandlers");
+const { ERR_LOGIN__INVALID_USER, ERR_LOGIN__INVALID_PASSWORD, ERR_AUTH__INVALID_TOKEN } = require("../errorHandlers");
 const model = require("../models/user/user_accountModel");
 
 async function loginVerification(params){
@@ -46,8 +46,16 @@ async function logoutUser(token, expDate){
     return {message: 'Sesión cerrada con éxito'}
 }
 
+async function searchToken(token){
+    const resp = await model.searchToken(token);
+    if (resp.length > 0){
+        throw ERR_AUTH__INVALID_TOKEN;
+    }
+}
+
 module.exports={
     loginVerification,
     generateToken,
-    logoutUser
+    logoutUser,
+    searchToken
 }
