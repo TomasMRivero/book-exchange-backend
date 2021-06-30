@@ -30,4 +30,16 @@ route.post('/login', async(req, res) => {
 
 });
 
+route.post('/logout', async (req, res) => {
+    try {
+        const token = req.headers.authorization;
+        const expDate = new Date(req.user.exp  * 1000)
+        const resp = await controller.logoutUser(token, expDate)
+        res.send(resp).status(200);
+    } catch (e) {
+        console.log(e.message);
+        res.status(400).send({message: "error al cerrar sesión. Intente nuevamente."})
+    }
+});
+
 module.exports = route;

@@ -1,5 +1,5 @@
 const { ERR_INPUT__MISSING_DATA } = require("../errorHandlers");
-const service = require("../services/user/user_accountService");
+const service = require("../services/authService");
 
 async function loginUser(params){
 
@@ -29,7 +29,12 @@ async function registerUser(params){
     return await service.registerUser(setParams);
 }
 
+async function logoutUser(token, expDate){
+    return await service.logoutUser(token, expDate);
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 }

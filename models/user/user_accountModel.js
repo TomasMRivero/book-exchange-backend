@@ -24,7 +24,11 @@ async function getUserById(id){
 }
 
 async function getUserByField(field, value){
-    return await qy(`SELECT * FROM \`user_account\` WHERE ${field} = ?`, [ value ])
+    return await qy('SELECT * FROM `user_account` WHERE ?? = ?', [ field, value ]);
+}
+
+async function blacklistToken(setParams){
+    return await qy('INSERT INTO `token_blacklist` SET ?', [setParams] );
 }
 
 module.exports = {
@@ -33,5 +37,6 @@ module.exports = {
     newUser,
     getUserList,
     getUserByField,
-    getUserById
+    getUserById,
+    blacklistToken
 }
