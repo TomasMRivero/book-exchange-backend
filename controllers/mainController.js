@@ -1,5 +1,6 @@
 const { ERR_INPUT__MISSING_DATA } = require("../errorHandlers");
 const service = require("../services/authService");
+const user_service = require("../services/user/user_accountService");
 
 async function loginUser(params){
 
@@ -17,16 +18,16 @@ async function loginUser(params){
 
 async function registerUser(params){
 
-    const setParams = await service.verifySetParams(params);
+    const setParams = await user_service.verifySetParams(params);
 
     const searchParams = {
         mail: setParams.mail,
         alias: setParams.alias
     };
     
-    await service.verifyExistingUser(searchParams);
+    await user_service.verifyExistingUser(searchParams);
 
-    return await service.registerUser(setParams);
+    return await user_service.registerUser(setParams);
 }
 
 async function logoutUser(token, expDate){

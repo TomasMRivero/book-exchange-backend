@@ -49,6 +49,7 @@ app.use(auth.unless({
         {url:'/register', method:['POST']},
 
         //rutas book
+        {url: '/book', method:['GET']},
         {url: /^\/book\/search\/.*/ , method:['GET']},
         {url: /^\/book\/.*/, method:['GET']},
 
