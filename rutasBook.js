@@ -1,6 +1,22 @@
 const express = require('express');
 const route = express.Router();
 const controller = require('./Controllers/bookController.js');
+const multer = require('multer');
+var path = require('path')
+
+const storage = multer.diskStorage({
+    destination: "./public/uploads/book/",
+    filename: function (req, file, cb) {
+        cb(
+            null,
+            file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+        );
+    },
+});
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 10000000000 },
+});
 
 route.get('/', async( req ,res) =>{
     try{
@@ -40,9 +56,13 @@ route.get('/search/:field', async (req, res) => {
     }
 });
 
-route.post('/', async(req, res) => {
+route.post('/', upload.single('photo'), async(req, res) => {
        
     try{
+        console.log(req.file)
+        if(!req.file){
+            throw {message: 'error'}
+        }
         const sendParams={
             user_account_id: req.user.user_id,
             ...req.body
