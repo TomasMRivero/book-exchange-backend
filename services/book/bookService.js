@@ -25,15 +25,30 @@ async function verifySetParams(params){
         user_account_id,
         title,
         author,
+        book_type_id,
         description,
+        book_condition,
+        main_picture
     } = params;
 
     if (
         !user_account_id ||
         !title || !title.trim() ||
-        !author || !author.trim()
+        !author || !author.trim() ||
+        !book_type_id ||
+        !book_condition ||
+        !main_picture
     ){
         throw ERR_INPUT__MISSING_DATA;
+    }
+
+    const typeExists = await model.getBookType(book_type_id)
+    if (typeExists.length < 1){
+        throw {message: 'Tipo no válido'}
+    }
+
+    if (book_condition < 0 || book_condition > 5) {
+        throw {message: 'Estado no válido'}
     }
 
     const userExists =  await getUserById(user_account_id);
@@ -41,10 +56,15 @@ async function verifySetParams(params){
         throw ERR_USER__NOT_FOUND;
     }
 
+    const picture_route = `uploads/book/${main_picture.filename}`
+    
     params = {
         user_account_id: user_account_id,
         title: title.trim().toUpperCase(),
         author: author.trim().toUpperCase(),
+        book_type_id: book_type_id,
+        book_condition: book_condition,
+        main_picture: picture_route
     }
 
     if(  !description || description == null || description == "" || description.trim() == ""){

@@ -56,7 +56,7 @@ route.get('/search/:field', async (req, res) => {
     }
 });
 
-route.post('/', upload.single('photo'), async(req, res) => {
+route.post('/', upload.single('main_picture'), async(req, res) => {
        
     try{
         console.log(req.file)
@@ -65,14 +65,16 @@ route.post('/', upload.single('photo'), async(req, res) => {
         }
         const sendParams={
             user_account_id: req.user.user_id,
-            ...req.body
+            ...req.body,
+            main_picture: req.file
         };
+        console.log(sendParams)
         const resp = await controller.createBook(sendParams);
         res.status(201).json({id: resp.insertId})
     }catch (e){
         const status = (e) => {return(e.status?e.status:400)}
         const message = (e) => {return(e.message?e.message:"error inesperado")}
-        console.error(e.code);
+        console.error(e);
         res.status(status(e)).json(message(e));
     }
 

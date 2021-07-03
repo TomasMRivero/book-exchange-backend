@@ -55,13 +55,18 @@ app.use(auth.unless({
 
         //rutas user
         {url:'/user', methods:['GET']},
-        {url: /^\/user\/.[^me]/, methods:['GET']}
+        {url: /^\/user\/.[^me]/, methods:['GET']},
+
+        {url:/^\/uploads\/.*/},
     ]
 }));
 
 app.use('/user', rutasUser);
 app.use('/book', rutasBook);
 app.use('/', rutasMain)
+
+var publicDir = require('path').join(__dirname,'/public'); 
+app.use(express.static(publicDir)); 
 
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);

@@ -7,6 +7,10 @@ async function getBookList(){
     return await qy('SELECT * FROM `book`');
 }
 
+async function getBookType(id){
+    return await qy('SELECT * FROM `book_type` WHERE id=?', [id])
+}
+
 async function getBookById(id){
     return await qy('SELECT * FROM `book` WHERE id = ?', [id]);
 }
@@ -35,5 +39,6 @@ module.exports = {
     getBookById,
     getBookListByField,
     updateBook,
-    deleteBook
+    deleteBook,
+    getBookType
 }
