@@ -22,6 +22,10 @@ async function createBook(params){
     return await service.createBook(setParams);
 }
 
+async function uploadBookPictures(pictureParams){
+    await service.uploadBookPictures(pictureParams);
+};
+
 async function updateBook(params){
     const{
         user,
@@ -55,5 +59,6 @@ module.exports = {
     showBookById,
     createBook,
     updateBook,
-    deleteBook
+    deleteBook,
+    uploadBookPictures
 }

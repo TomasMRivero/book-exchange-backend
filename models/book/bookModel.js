@@ -24,6 +24,11 @@ async function newBook(setParams){
     return await qy('INSERT INTO `book` SET ?', [ setParams ] );
 }
 
+async function uploadPicture(setParams){
+    console.log(setParams)
+    return await qy('INSERT INTO `book_pictures` SET ?', [ setParams ])
+}
+
 async function updateBook(setParams, searchParams){
     return await qy('UPDATE `book` SET ? WHERE ?', [ setParams, searchParams ] );
 }
@@ -40,5 +45,6 @@ module.exports = {
     getBookListByField,
     updateBook,
     deleteBook,
-    getBookType
+    getBookType,
+    uploadPicture
 }

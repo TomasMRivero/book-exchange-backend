@@ -56,20 +56,26 @@ route.get('/search/:field', async (req, res) => {
     }
 });
 
-route.post('/', upload.single('main_picture'), async(req, res) => {
+route.post('/', upload.fields([{ name: "main_picture", maxCount:1 }, {name: "book_pictures", maxCount:8}]), async(req, res) => {
        
     try{
-        console.log(req.file)
-        if(!req.file){
+        if(!req.files["main_picture"]){
             throw {message: 'error'}
         }
         const sendParams={
             user_account_id: req.user.user_id,
             ...req.body,
-            main_picture: req.file
+            main_picture: req.files["main_picture"][0],
         };
-        console.log(sendParams)
         const resp = await controller.createBook(sendParams);
+        if(req.files["book_pictures"].length > 0){
+            const pictureParams = {
+                book_id: resp.insertId,
+                pictures: req.files["book_pictures"],
+                timestamp: Date.now()
+            }
+            await controller.uploadBookPictures(pictureParams);
+        }
         res.status(201).json({id: resp.insertId})
     }catch (e){
         const status = (e) => {return(e.status?e.status:400)}
