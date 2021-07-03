@@ -1,5 +1,6 @@
 const { ERR_BOOK__NOT_FOUND, ERR_INPUT__MISSING_DATA, ERR_USER__NOT_FOUND, ERR_AUTH__FORBIDDEN } = require("../../errorHandlers");
 const model = require("../../models/book/bookModel");
+const typeModel = require("../../models/book/book_typeModel");
 const {getUserById} = require("../../models/user/user_accountModel");
 
 async function showBookList(){
@@ -42,7 +43,7 @@ async function verifySetParams(params){
         throw ERR_INPUT__MISSING_DATA;
     }
 
-    const typeExists = await model.getBookType(book_type_id)
+    const typeExists = await typeModel.getBookType(book_type_id)
     if (typeExists.length < 1){
         throw {message: 'Tipo no válido'}
     }

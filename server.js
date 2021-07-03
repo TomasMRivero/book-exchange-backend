@@ -52,6 +52,7 @@ app.use(auth.unless({
         {url: '/book', method:['GET']},
         {url: /^\/book\/search\/.*/ , method:['GET']},
         {url: /^\/book\/.*/, method:['GET']},
+        {url: '/book/types', method:['GET']},
 
         //rutas user
         {url:'/user', methods:['GET']},

@@ -29,6 +29,19 @@ route.get('/', async( req ,res) =>{
         res.status(status(e)).json(message(e));
     }
 });
+
+route.get('/types', async(req,res) => {
+    try{
+        const types = await controller.getBookTypeList();
+        res.status(200).json(types);
+    }catch (e){
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
+    }
+});
+
 route.get('/:id', async(req, res) => {
     try{
         const books = await controller.showBookById(req.params.id);
@@ -68,7 +81,7 @@ route.post('/', upload.fields([{ name: "main_picture", maxCount:1 }, {name: "boo
             main_picture: req.files["main_picture"][0],
         };
         const resp = await controller.createBook(sendParams);
-        if(req.files["book_pictures"].length > 0){
+        if(req.files["book_pictures"] > 0){
             const pictureParams = {
                 book_id: resp.insertId,
                 pictures: req.files["book_pictures"],
@@ -123,5 +136,6 @@ route.delete('/:id', async(req, res) => {
     }
 
 });
+
 
 module.exports = route
