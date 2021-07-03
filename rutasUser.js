@@ -43,12 +43,13 @@ route.get('/:id', async(req, res) => {
 
 route.put('/me', async(req, res) => {
     try {
+        console.log(req.user);
         const sendParams={
             user: req.user.user_id,
             newValues: req.body
         };
         const resp = await controller.updateUser(sendParams);
-        res.send({resp}).status(201);
+        res.send(resp).status(201);
     } catch (e) {
         const status = (e) => {return(e.status?e.status:400)}
         const message = (e) => {return(e.message?e.message:"error inesperado")}

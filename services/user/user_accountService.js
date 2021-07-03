@@ -75,11 +75,17 @@ async function registerUser(setParams){
     return await model.newUser(setParams)
 }
 
-async function verifyNewValues(params, book){
+async function verifyNewValues(params, user){
 
     const alias = (() => {return (!params.alias || !params.alias.trim()?user.alias:params.alias.toUpperCase().trim())});
     const name = (() => {return (!params.name || !params.name.trim()?user.name:params.name.toUpperCase().trim())});
-   
+    exists = await model.getUserByField('alias', alias());
+    
+    if(alias() !== user.alias){
+        if (exists.length !== 0){
+            throw ERR_USER__EXISTING_ALIAS;
+        }}
+
     setParams = {
         alias: alias(),
         name: name()

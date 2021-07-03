@@ -75,7 +75,7 @@ async function verifyNewValues(params, book){
 
     const title = (() => {return (!params.title || !params.title.trim()?book.title:params.title.toUpperCase().trim())});
     const author = (() => {return (!params.author || !params.author.trim()?book.author:params.author.toUpperCase().trim())});
-    const description = (() => {return (!params.description || !params.description.trim()?null:params.description.toUpperCase().trim())});
+    const description = (() => {return (!params.description || !params.description.trim()?null:params.description.trim())});
 
     setParams = {
         title: title(),

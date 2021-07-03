@@ -68,7 +68,7 @@ route.put('/:id', async(req, res) => {
             newValues: req.body
         };
         const resp = await controller.updateBook(sendParams);
-        res.send({resp}).status(201);
+        res.send(resp).status(201);
     } catch (e) {
         const status = (e) => {return(e.status?e.status:400)}
         const message = (e) => {return(e.message?e.message:"error inesperado")}
