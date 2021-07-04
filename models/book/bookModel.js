@@ -16,12 +16,10 @@ async function getBookListByField(field, value){
 }
 
 async function newBook(setParams){
-    console.log(setParams);
     return await qy('INSERT INTO `book` SET ?', [ setParams ] );
 }
 
 async function uploadPicture(setParams){
-    console.log(setParams)
     return await qy('INSERT INTO `book_pictures` SET ?', [ setParams ])
 }
 

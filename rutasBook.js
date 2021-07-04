@@ -124,7 +124,7 @@ route.put('/:id', async(req, res) => {
     } catch (e) {
         const status = (e) => {return(e.status?e.status:400)}
         const message = (e) => {return(e.message?e.message:"error inesperado")}
-        console.error(e.code);
+        console.error(e);
         res.status(status(e)).json(message(e));
     }
 

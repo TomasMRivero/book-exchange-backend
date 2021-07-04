@@ -96,12 +96,16 @@ async function verifyNewValues(params, book){
 
     const title = (() => {return (!params.title || !params.title.trim()?book.title:params.title.toUpperCase().trim())});
     const author = (() => {return (!params.author || !params.author.trim()?book.author:params.author.toUpperCase().trim())});
+    const book_type_id = (() => {return !params.book_type_id?book.book_ype_id:params.book_type_id});
     const description = (() => {return (!params.description || !params.description.trim()?null:params.description.trim())});
+    const book_condition = (() => {return (!params.book_condition? book.book_condition: params.book_condition)})
 
     setParams = {
         title: title(),
         author: author(),
-        description: description()
+        book_type_id: book_type_id(),
+        description: description(),
+        book_condition: book_condition()
     };
 
     return setParams

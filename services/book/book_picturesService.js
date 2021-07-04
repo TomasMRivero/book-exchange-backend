@@ -6,9 +6,7 @@ async function uploadBookPictures(pictureParams){
         pictures,
         timestamp
     } = pictureParams;
-    console.log(pictures)
     for(const picture in pictures){
-        console.log(pictures[picture])
         const picture_route = `uploads/book/${pictures[picture].filename}`
 
         const setParams = {
@@ -16,7 +14,6 @@ async function uploadBookPictures(pictureParams){
             picture_dir: picture_route,
             timestamp: new Date(timestamp)
         }
-        console.log(setParams)
         await model.uploadPicture(setParams);
     }
 }

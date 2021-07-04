@@ -4,7 +4,6 @@ const db = connectDatabase();
 const qy = db.query
 
 async function uploadPicture(setParams){
-    console.log("picture")
     return await qy('INSERT INTO `book_pictures` SET ?', [ setParams ])
 }
 async function getBookPictures(id){
