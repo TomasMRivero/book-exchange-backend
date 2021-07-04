@@ -86,26 +86,6 @@ async function createBook(setParams){
     return await model.newBook(setParams);
 }
 
-async function uploadBookPictures(pictureParams){
-    const {
-        book_id,
-        pictures,
-        timestamp
-    } = pictureParams;
-
-    for(const picture in pictures){
-        const picture_route = `uploads/book/${picture.filename}`
-
-        const setParams = {
-            book_id: book_id,
-            picture_dir: picture_route,
-            timestamp: timestamp
-        }
-
-        await model.uploadPicture(setParams);
-    }
-}
-
 async function verifyAuthorization(dbId, tokenId){    
     if(dbId !== tokenId){
         throw ERR_AUTH__FORBIDDEN
@@ -146,5 +126,4 @@ module.exports = {
     verifyNewValues,
     updateBook,
     deleteBook,
-    uploadBookPictures
 }

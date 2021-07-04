@@ -41,6 +41,17 @@ route.get('/types', async(req,res) => {
         res.status(status(e)).json(message(e));
     }
 });
+route.get('/pictures/:id', async(req,res) => {
+    try{
+        const pictures = await controller.getBookPictures(req.params.id);
+        res.status(200).json(pictures);
+    }catch (e){
+        const status = (e) => {return(e.status?e.status:400)}
+        const message = (e) => {return(e.message?e.message:"error inesperado")}
+        console.error(e.code);
+        res.status(status(e)).json(message(e));
+    }
+});
 
 route.get('/:id', async(req, res) => {
     try{
@@ -81,7 +92,7 @@ route.post('/', upload.fields([{ name: "main_picture", maxCount:1 }, {name: "boo
             main_picture: req.files["main_picture"][0],
         };
         const resp = await controller.createBook(sendParams);
-        if(req.files["book_pictures"] > 0){
+        if(req.files["book_pictures"]){
             const pictureParams = {
                 book_id: resp.insertId,
                 pictures: req.files["book_pictures"],

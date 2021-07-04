@@ -53,12 +53,15 @@ app.use(auth.unless({
         {url: /^\/book\/search\/.*/ , method:['GET']},
         {url: /^\/book\/.*/, method:['GET']},
         {url: '/book/types', method:['GET']},
+        {url: /^\/book\/pictures\/.*/ , method:['GET']},
+
 
         //rutas user
         {url:'/user', methods:['GET']},
         {url: /^\/user\/.[^me]/, methods:['GET']},
 
         {url:/^\/uploads\/.*/},
+
     ]
 }));
 

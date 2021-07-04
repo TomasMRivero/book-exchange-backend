@@ -1,6 +1,7 @@
 const { ERR_INPUT__MISSING_DATA, ERR_AUTH__FORBIDDEN } = require("../errorHandlers");
 const service = require("../services/book/bookService");
 const typeService = require("../services/book/book_typeService")
+const picturesService = require("../services/book/book_picturesService")
 
 async function showBookList(){
     return await service.showBookList();
@@ -24,7 +25,7 @@ async function createBook(params){
 }
 
 async function uploadBookPictures(pictureParams){
-    await service.uploadBookPictures(pictureParams);
+    await picturesService.uploadBookPictures(pictureParams);
 };
 
 async function updateBook(params){
@@ -54,6 +55,10 @@ async function deleteBook(params){
     return await service.deleteBook(book_id);
 } 
 
+async function getBookPictures(id){
+    return await picturesService.getBookPictures(id);
+}
+
 async function getBookTypeList(){
     return await typeService.getBookTypeList()
 }
@@ -66,5 +71,6 @@ module.exports = {
     updateBook,
     deleteBook,
     uploadBookPictures,
-    getBookTypeList
+    getBookTypeList,
+    getBookPictures
 }
